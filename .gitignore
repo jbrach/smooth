@@ -1,3 +1,6 @@
 
 bin
 obj
+*.log
+src/bin
+src/obj

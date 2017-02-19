@@ -1,0 +1,7 @@
+{
+    "projects": [
+        "src/console",
+        "test"
+
+    ]
+}
