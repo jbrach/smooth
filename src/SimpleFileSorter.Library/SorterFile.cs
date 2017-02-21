@@ -49,8 +49,11 @@ namespace SimpleFileSorter.Library
 
             public void Move()
             {
-
-                File.Move(_file.OriginalFilePathAndName, _file.NewFilePathAndName);
+                //TODO Use the year and create the directory if it does not exist
+                //Combine the path with the year
+                //Ensure the new file does not exist
+                //
+                //File.Move(_file.OriginalFilePathAndName, _file.NewFilePathAndName);
                 _file.Moved = true;
 
             }
