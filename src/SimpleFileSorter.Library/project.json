@@ -1,5 +1,12 @@
 {
   "version": "1.0.0-*",
+  "name": "SimpleFileSorter.Library",
+
+   "compilationOptions": {
+        "xmlDoc": true,
+        "keyFile": "../lib.snk"
+    },
+
   "buildOptions": {
     "debugType": "portable"
   },
@@ -10,5 +17,8 @@
         "NETStandard.Library": "1.6.1"
       }
     }
-  }
+  },
+   "scripts": {
+        "prepublish": [ "gen.cmd" ]
+    }
 }

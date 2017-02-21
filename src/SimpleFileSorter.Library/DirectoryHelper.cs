@@ -1,7 +1,7 @@
 using System.IO;
 
 
-namespace SimpleFileSorter.Framework
+namespace SimpleFileSorter.Library
 {
 
 /// <summary>
@@ -20,7 +20,10 @@ namespace SimpleFileSorter.Framework
             _directory = Path.GetFullPath(directory);
         }
         
-    
+        public string GetCleanDirectory()
+        {
+            return _directory;
+        }
     }
 
 }

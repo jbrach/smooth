@@ -1,5 +1,6 @@
 ﻿using System;
 using Xunit;
+using SimpleFileSorter.Library;
 
 namespace Tests
 {
@@ -8,9 +9,8 @@ namespace Tests
         [Fact]
         public void Test1() 
         {
-            Assert.True(true);
-           // var helper = new DirectoryHelper();
-             
+            Assert.Throws(typeof(System.IO.DirectoryNotFoundException), 
+            ()=> new DirectoryHelper("/blah/blah/foo/"));
         }
         
     }

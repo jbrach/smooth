@@ -2683,6 +2683,13 @@
         "runtime": {
           "lib/dotnet/xunit.runner.utility.dotnet.dll": {}
         }
+      },
+      "SimpleFileSorter.Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.6",
+        "dependencies": {
+          "NETStandard.Library": "1.6.1"
+        }
       }
     }
   },
@@ -7892,12 +7899,17 @@
         "xunit.runner.utility.2.1.0.nupkg.sha512",
         "xunit.runner.utility.nuspec"
       ]
+    },
+    "SimpleFileSorter.Library/1.0.0": {
+      "type": "project",
+      "path": "../src/SimpleFileSorter.Library/project.json"
     }
   },
   "projectFileDependencyGroups": {
     "": [
+      "SimpleFileSorter.Library",
       "System.Runtime.Serialization.Primitives >= 4.3.0",
-      "dotnet-test-xunit >= 1.0.0-rc2-192208-24",
+      "dotnet-test-xunit >= 1.0.0-rc2-build10015",
       "xunit >= 2.1.0"
     ],
     ".NETCoreApp,Version=v1.1": [
