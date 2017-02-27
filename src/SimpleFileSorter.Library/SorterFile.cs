@@ -1,39 +1,36 @@
-using System;
 using System.IO;
 
 namespace SimpleFileSorter.Library
 {
     public class SorterFile
     {
+        private readonly FileInfo OriginalFileInfo;
+        public bool Moved { get; private set; }
+        public string StagedFilePath { get; private set; }
+
+
         public SorterFile(FileInfo fileInfo)
         {
-            OriginalFilePathAndName = fileInfo.FullName;
+            
+           /* OriginalFilePathAndName = fileInfo.FullName;
             FileNameOnly = fileInfo.Name;
             CreateDate = fileInfo.CreationTime;
-            Moved = false;
-            Staged = false;
-        }
-
-        public string NewFilePathAndName { get; private set; }
-        public string FileNameOnly{ get; private set; }
-        public DateTime CreateDate { get; private set; }
-        public string OriginalFilePathAndName{ get; private set; }
-        public bool Moved { get; private set; }
-        public bool Staged { get; private set; }
-
-        public SorterFileMover Stage(string newDirectory)
-        {
-            //Check directories
-            DirectoryHelper helper = new DirectoryHelper(newDirectory);
+            */
+            OriginalFileInfo = fileInfo;
             
-            NewFilePathAndName = Path.Combine(helper.GetCleanDirectory(), FileNameOnly);
-            //Check file name and other error conditions
+            Moved = false;
+            }
 
-            //Store this variabile for clients.  Might need to let them know why this file could not be sent as well
-            Staged = true;
+
+        public SorterFileMover Stage(string moveToDirectory)
+        { 
+            DirectoryHelper rootDirectoryHelper = new DirectoryHelper(moveToDirectory);
+            var createDate = File.GetCreationTime(OriginalFileInfo.FullName);
+
+            StagedFilePath = Path.Combine(rootDirectoryHelper.GetFullPath(),OriginalFileInfo.CreationTime.Year.ToString());
+            rootDirectoryHelper.BuildSubDirectory(StagedFilePath);
 
             var moverFactory = new SorterFileMover.Factory();
-            
             return moverFactory.Create(this);
         }
 
@@ -49,12 +46,14 @@ namespace SimpleFileSorter.Library
 
             public void Move()
             {
-                //TODO Use the year and create the directory if it does not exist
-                //Combine the path with the year
-                //Ensure the new file does not exist
-                //
-                //File.Move(_file.OriginalFilePathAndName, _file.NewFilePathAndName);
-                _file.Moved = true;
+                 System.Diagnostics.Debug.WriteLine("Moving " + _file.OriginalFileInfo.FullName + " TO: " +_file.StagedFilePath);
+                 var newFile =  Path.Combine(_file.StagedFilePath,_file.OriginalFileInfo.Name);
+
+                 if (!File.Exists(newFile))
+                 {
+                    File.Move(_file.OriginalFileInfo.FullName, Path.Combine(_file.StagedFilePath,_file.OriginalFileInfo.Name));
+                    _file.Moved = true;
+                 }
 
             }
             public class Factory

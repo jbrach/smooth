@@ -3,6 +3,8 @@
   "buildOptions": {
     "debugType": "portable"
   },
+       "embed": {         "include": [ "images/" ]     },
+  
   "dependencies": {
     "System.Runtime.Serialization.Primitives": "4.3.0",
     "xunit": "2.1.0",
