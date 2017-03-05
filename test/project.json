@@ -1,9 +1,15 @@
 {
   "version": "1.0.0-*",
   "buildOptions": {
-    "debugType": "portable"
+    "debugType": "portable",
+     "copyToOutput": { 
+          "include": [ "images/*.*" ],
+          "mappings": {
+            "images/*" : "."
+          }
+                
+      }
   },
-       "embed": {         "include": [ "images/" ]     },
   
   "dependencies": {
     "System.Runtime.Serialization.Primitives": "4.3.0",
@@ -12,6 +18,7 @@
     "SimpleFileSorter.Library": {
       "target": "project"
     }
+    
 
   },
   "testRunner": "xunit",
