@@ -1,15 +1,25 @@
 using System.IO;
-using System.Collections.Generic;
 using System;
 
 namespace SimpleFileSorter.Library
 {
+
     public class Sorter
     {
         private readonly string _directory;
 
-        private IList<SorterFile> _files = new List<SorterFile>();
-        private readonly string _moveDirectory;
+        private readonly string _sortMoveToRootDirectory;
+
+        private int _sortedFileCount;
+
+        //This delegate can be used to point to methods
+        //which return void and take a string.
+        public delegate void SortHandler(SorterFile sort);
+
+        //This event can cause any method which conforms
+        //to MyEventHandler to be called.
+        public event EventHandler<SorterFile> RaiseFileSortEvent;
+
 
     /// <summary>
     /// Creates a Sorter object
@@ -18,45 +28,23 @@ namespace SimpleFileSorter.Library
     /// Support Year Organization on day 1
     /// </summary>
     /// <param name="sortingDirectory"></param>
-    /// <param name="moveDirectory"></param>
-        public Sorter(string sortingDirectory, string moveDirectory)
+    /// <param name="sortMoveToRootDirectory"></param>
+        public Sorter(string sortingDirectory, string sortMoveToRootDirectory)
         {
             _directory = sortingDirectory;
-            _moveDirectory = moveDirectory;
+            _sortMoveToRootDirectory = sortMoveToRootDirectory;
+            _sortedFileCount = 0;
         }
 
-        private IList<SorterFile> Sort()
+        public int Sort()
         {
             DirectorySearch(new DirectoryInfo(_directory));
-            return _files;
-        }
-
-        public IList<SorterFile> MoveFiles()
-        {
-            Sort();
-            foreach(SorterFile file in _files)
-            {
-                file.Stage(_moveDirectory).Move();
-            }
-            return _files;
-
-        }
-
-         public IList<SorterFile> StageFiles()
-         {
-            Sort();
-            foreach(SorterFile file in _files)
-            {
-                file.Stage(_moveDirectory);
-            }
-            return _files;
-
+            return _sortedFileCount;
         }
 
         private void DirectorySearch(DirectoryInfo root)
         {
             System.IO.FileInfo[] files = null;
-            System.IO.DirectoryInfo[] subDirs = null;
             // First, process all the files directly under this folder
             try
             {
@@ -73,7 +61,6 @@ namespace SimpleFileSorter.Library
                 System.Diagnostics.Debug.WriteLine(e.Message);
 
             }
-
             catch (System.IO.DirectoryNotFoundException e)
             {
                  System.Diagnostics.Debug.WriteLine(e.Message);
@@ -81,31 +68,43 @@ namespace SimpleFileSorter.Library
             
             if (files != null)
             {
-                foreach (System.IO.FileInfo fi in files)
-                {
-                    // In this example, we only access the existing FileInfo object. If we
-                    // want to open, delete or modify the file, then
-                    // a try-catch block is required here to handle the case
-                    // where the file has been deleted since the call to TraverseTree().
-                    //Console.WriteLine(fi.FullName);
-                    if  (IsSortableFile(fi))
-                    {
-                        _files.Add(new SorterFile(fi));
-                    }
-                }
+                //Find the files that need to be sorted
+                SortFiles(files);
 
                 // Now find all the subdirectories under this directory.
-                subDirs = root.GetDirectories();
-
-                foreach (System.IO.DirectoryInfo dirInfo in subDirs)
-                {
-                    // Resursive call for each subdirectory.
-                    DirectorySearch(dirInfo);
-                }
-            }            
+                SearchDirectories(root);
+            }
         }
 
-        private bool IsSortableFile(FileInfo fi)
+        private void SearchDirectories(DirectoryInfo root)
+        {
+            foreach (System.IO.DirectoryInfo dirInfo in root.GetDirectories())
+            {
+                // Resursive call for each subdirectory.
+                DirectorySearch(dirInfo);
+            }
+
+          
+        }
+
+        private void SortFiles(FileInfo[] files)
+        {
+            foreach (System.IO.FileInfo fi in files)
+            {
+               
+                if (IsSortableFile(fi))
+                {
+                    EventHandler<SorterFile> handler = RaiseFileSortEvent;
+                    if (handler!=null)
+                    {
+                         handler(this, new SorterFile(fi,_sortMoveToRootDirectory));
+                    }
+
+                }
+            }
+        }
+
+        protected virtual bool IsSortableFile(FileInfo fi)
         {
             var sortable = false;
             switch(fi.Extension)

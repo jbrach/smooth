@@ -1,14 +1,27 @@
 using Xunit;
 using SimpleFileSorter.Library;
 using System.IO;
-using System.Resources;
 using System;
 using System.Linq;
 
 namespace Tests
 {
-    public class SorterTests
+    public class SorterTests : IDisposable
     {
+
+        private readonly string _rootPath;
+        private readonly DirectoryInfo _sortingDirectory;
+        private readonly DirectoryInfo _destinationDirectory;
+
+        public SorterTests()
+        {
+            Random r = new Random(DateTime.Now.Millisecond);
+
+            _rootPath = Path.GetTempPath();
+            _sortingDirectory = Directory.CreateDirectory(Path.Combine(_rootPath, "testing_sorting_" + r.Next(9999).ToString()));
+            _destinationDirectory = Directory.CreateDirectory(Path.Combine(_rootPath, "testing_destination_" + r.Next(99999).ToString()));
+
+        }
 
         [Fact]
         public void ImageHelper_Finds_Images()
@@ -21,91 +34,106 @@ namespace Tests
         [Fact]
         public void File_Moved_Current_Year_Folder_Given_Created_This_Year()
         {
-            var newFilePath = System.IO.Path.GetTempFileName();
-            FileInfo info = new FileInfo(newFilePath);
-            File.Move(newFilePath, newFilePath.Replace(info.Extension, ".jpg"));
-            var sorter = new Sorter(info.DirectoryName, info.DirectoryName);
-            sorter.MoveFiles();
-            var expectedPathAfterSorting = Path.Combine(info.DirectoryName, DateTime.Now.Year.ToString(), info.Name.Replace(info.Extension, ".jpg"));
-            Assert.True(File.Exists(expectedPathAfterSorting));
+
+            ImageHelper helper = new ImageHelper();
+            string imageFileName = helper.GetRandomImageFileName();
+            helper.CopyLarge(_sortingDirectory.FullName, DateTime.Now, imageFileName);
+
+            var sorter = new Sorter(_sortingDirectory.FullName, _destinationDirectory.FullName);
+            sorter.RaiseFileSortEvent += HandleSortEvent;
+
+            sorter.Sort();
+
+            Assert.True(File.Exists(Path.Combine(_destinationDirectory.FullName, DateTime.Now.Year.ToString(), imageFileName)));
         }
 
-
-
+        private void HandleSortEvent(object sender, SorterFile e)
+        {
+            e.Stage(new YearSortStrategy()).Move();
+        }
 
 
         [Fact]
-    
         public void Move_Multipile_Files_Creates_MultipleDirectories_Given_Files_Created_Multiple_Years()
         {
 
-            Random r = new Random(DateTime.Now.Millisecond);
+            ImageHelper helper = new ImageHelper();
+            helper.CopyLarge(_sortingDirectory.FullName, new DateTime(2014, 3, 7));
+            helper.CopyMedium(_sortingDirectory.FullName, new DateTime(2015, 3, 7));
+            helper.CopySmall(_sortingDirectory.FullName, new DateTime(2016, 3, 7));
+            var sorter = new Sorter(_sortingDirectory.FullName, _destinationDirectory.FullName);
+            sorter.RaiseFileSortEvent += HandleSortEvent;
 
-            var rootPath = Path.GetTempPath();
-            var sortingDirectory = Directory.CreateDirectory(Path.Combine(rootPath, "testing_sorting_" + r.Next(9999).ToString()));
-            var destinationDirectory = Directory.CreateDirectory(Path.Combine(rootPath, "testing_destination_" + r.Next(99999).ToString()));
+            sorter.Sort();
 
-            try
-            {
-                ImageHelper helper = new ImageHelper();
-                helper.CopyLarge(sortingDirectory.FullName, new DateTime(2014,3,7));
-                helper.CopyMedium(sortingDirectory.FullName, new DateTime(2015,3,7));
-                helper.CopySmall(sortingDirectory.FullName, new DateTime(2016,3,7));
-                var sorter = new Sorter(sortingDirectory.FullName, destinationDirectory.FullName);
-                sorter.MoveFiles();
-
-                destinationDirectory.Refresh();
-                Assert.True(destinationDirectory.EnumerateDirectories().Any(x => x.Name == "2014"));
-                Assert.True(destinationDirectory.EnumerateDirectories().Any(x => x.Name == "2015"));
-                Assert.True(destinationDirectory.EnumerateDirectories().Any(x => x.Name == "2016"));
-            }
-            finally
-            {
-                sortingDirectory.Delete(true);
-                destinationDirectory.Delete(true);
-            }
-
-
-
+            _destinationDirectory.Refresh();
+            Assert.True(_destinationDirectory.EnumerateDirectories().Any(x => x.Name == "2014"));
+            Assert.True(_destinationDirectory.EnumerateDirectories().Any(x => x.Name == "2015"));
+            Assert.True(_destinationDirectory.EnumerateDirectories().Any(x => x.Name == "2016"));
         }
 
 
-            [Fact]
-            public void LargeNumbers()
+        
+        [Fact]
+        
+        public void Move_Multipile_Files_Creates_MultipleDirectories_Given_LargerNumber_Files()
         {
 
-            Random r = new Random(DateTime.Now.Millisecond);
+            //TODO Figure out how to test performance.  Single Threaded verse async, parallal  Client of sort library will decide. 
 
-            var rootPath = Path.GetTempPath();
-            var sortingDirectory = Directory.CreateDirectory(Path.Combine(rootPath, "testing_sorting_" + r.Next(9999).ToString()));
-            var destinationDirectory = Directory.CreateDirectory(Path.Combine(rootPath, "testing_destination_" + r.Next(99999).ToString()));
 
-            try
+            int i = 0;
+            while (i < 100)
             {
-                int i = 0;
-                while ( i < 100)
-                {
-                    ImageHelper helper = new ImageHelper();
-                    helper.CopyLarge(sortingDirectory.FullName, helper.GetRandomDate(), i.ToString() + "_Large_"+ helper.GetRandomImageFile() );
-                    helper.CopyMedium(sortingDirectory.FullName, helper.GetRandomDate(), i.ToString() + "_Medium_" + helper.GetRandomImageFile() );
-                    helper.CopySmall(sortingDirectory.FullName, helper.GetRandomDate(), i.ToString() + "_Small_" + helper.GetRandomImageFile() );
-                    i++;
-                }
-                var sorter = new Sorter(sortingDirectory.FullName, destinationDirectory.FullName);
-                sorter.MoveFiles();
-
-                destinationDirectory.Refresh();
-                Assert.True(destinationDirectory.EnumerateDirectories().Count()>1 );
-           
+                ImageHelper helper = new ImageHelper();
+                helper.CopyLarge(_sortingDirectory.FullName, helper.GetRandomDate(), i.ToString() + "_Large_" + helper.GetRandomImageFileName());
+                helper.CopyMedium(_sortingDirectory.FullName, helper.GetRandomDate(), i.ToString() + "_Medium_" + helper.GetRandomImageFileName());
+                helper.CopySmall(_sortingDirectory.FullName, helper.GetRandomDate(), i.ToString() + "_Small_" + helper.GetRandomImageFileName());
+                i++;
             }
-            finally
-            {
-                sortingDirectory.Delete(true);
-                destinationDirectory.Delete(true);
-            }
+            var sorter = new Sorter(_sortingDirectory.FullName, _destinationDirectory.FullName);
+            sorter.RaiseFileSortEvent += HandleSortEvent;
 
-
-
+            sorter.Sort();
+            _destinationDirectory.Refresh();
+            Assert.True(_destinationDirectory.EnumerateDirectories().Count() > 1);
         }
+
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: dispose managed state (managed objects).
+                    _sortingDirectory.Delete(true);
+                    _destinationDirectory.Delete(true);
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
+                // TODO: set large fields to null.
+
+                disposedValue = true;
+            }
+        }
+
+        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
+        // ~SorterTests() {
+        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+        //   Dispose(false);
+        // }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            // TODO: uncomment the following line if the finalizer is overridden above.
+            // GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }

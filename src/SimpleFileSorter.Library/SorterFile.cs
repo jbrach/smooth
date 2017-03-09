@@ -2,34 +2,44 @@ using System.IO;
 
 namespace SimpleFileSorter.Library
 {
+    public interface ISortStrategy
+    {
+        string BuildNewFilePath(FileInfo originalFile, string destinationRootDirectory);
+    }
+
+    public class YearSortStrategy : ISortStrategy
+    {
+        public string BuildNewFilePath(FileInfo originalFile, string destinationRootDirectory)
+        {
+            DirectoryHelper rootDirectoryHelper = new DirectoryHelper(destinationRootDirectory);
+            var createDate = File.GetCreationTime(originalFile.FullName);
+            string newPath = Path.Combine(rootDirectoryHelper.GetFullPath(), originalFile.CreationTime.Year.ToString());
+            rootDirectoryHelper.BuildSubDirectory(newPath);
+            return newPath;
+        }
+    }
+
     public class SorterFile
     {
-        private readonly FileInfo OriginalFileInfo;
+        private readonly FileInfo FileToSort;
+        private readonly string SortRootDirectory;
         public bool Moved { get; private set; }
         public string StagedFilePath { get; private set; }
 
 
-        public SorterFile(FileInfo fileInfo)
+        public SorterFile(FileInfo fileToSort, string sortRootDirectory)
         {
-            
-           /* OriginalFilePathAndName = fileInfo.FullName;
-            FileNameOnly = fileInfo.Name;
-            CreateDate = fileInfo.CreationTime;
-            */
-            OriginalFileInfo = fileInfo;
-            
+
+            FileToSort = fileToSort;
+            SortRootDirectory = sortRootDirectory;
             Moved = false;
-            }
+        }
 
 
-        public SorterFileMover Stage(string moveToDirectory)
-        { 
-            DirectoryHelper rootDirectoryHelper = new DirectoryHelper(moveToDirectory);
-            var createDate = File.GetCreationTime(OriginalFileInfo.FullName);
-
-            StagedFilePath = Path.Combine(rootDirectoryHelper.GetFullPath(),OriginalFileInfo.CreationTime.Year.ToString());
-            rootDirectoryHelper.BuildSubDirectory(StagedFilePath);
-
+        public SorterFileMover Stage( ISortStrategy strategy )
+        {
+       
+            StagedFilePath = strategy.BuildNewFilePath(FileToSort, SortRootDirectory);
             var moverFactory = new SorterFileMover.Factory();
             return moverFactory.Create(this);
         }
@@ -46,14 +56,14 @@ namespace SimpleFileSorter.Library
 
             public void Move()
             {
-                 System.Diagnostics.Debug.WriteLine("Moving " + _file.OriginalFileInfo.FullName + " TO: " +_file.StagedFilePath);
-                 var newFile =  Path.Combine(_file.StagedFilePath,_file.OriginalFileInfo.Name);
+                System.Diagnostics.Debug.WriteLine("Moving " + _file.FileToSort.FullName + " TO: " + _file.StagedFilePath);
+                var newFile = Path.Combine(_file.StagedFilePath, _file.FileToSort.Name);
 
-                 if (!File.Exists(newFile))
-                 {
-                    File.Move(_file.OriginalFileInfo.FullName, Path.Combine(_file.StagedFilePath,_file.OriginalFileInfo.Name));
+                if (!File.Exists(newFile))
+                {
+                    File.Move(_file.FileToSort.FullName, Path.Combine(_file.StagedFilePath, _file.FileToSort.Name));
                     _file.Moved = true;
-                 }
+                }
 
             }
             public class Factory
