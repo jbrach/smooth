@@ -1,7 +1,7 @@
 using System.IO;
 using System;
 
-namespace SimpleFileSorter.Library
+namespace Smooth.Library
 {
 
     public class Sorter

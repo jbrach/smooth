@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace SimpleFileSorter.Library
+namespace Smooth.Library
 {
     public interface ISortStrategy
     {

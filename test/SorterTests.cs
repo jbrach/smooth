@@ -1,5 +1,5 @@
 using Xunit;
-using SimpleFileSorter.Library;
+using Smooth.Library;
 using System.IO;
 using System;
 using System.Linq;
