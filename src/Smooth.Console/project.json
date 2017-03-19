@@ -5,7 +5,12 @@
     "emitEntryPoint": true,
     "outputName": "smooth"
   },
-  "dependencies": {  "CliHelpers": "1.1.2.38"},
+  "dependencies": { 
+    "CliHelpers": "1.1.2.38",
+    "Smooth.Library": {
+      "target": "project"
+    }
+  },
   "frameworks": {
     "netcoreapp1.1": {
       "dependencies": {
