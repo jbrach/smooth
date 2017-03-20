@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace Smooth
 {
@@ -14,30 +15,33 @@ namespace Smooth
        
             app.OnExecute(() =>
             {
-                System.Console.WriteLine("**************EXECUTING SMOOTH********************");
-                
-                app.Arguments.ForEach(x=>System.Console.WriteLine(string.Concat("Name:", x.Name, " Value:", x.Value)));
+                Console.ForegroundColor = ConsoleColor.Green;
+                  
+                Console.WriteLine("**************************************************************");
+                Console.WriteLine("Running smooth with the following Arguments");
+                Console.WriteLine("___________________________________________");
+               
+                app.Arguments.ForEach(x=>System.Console.WriteLine(string.Concat( x.Name, " \t", x.Value)));
+                Console.WriteLine("");
+                Console.ResetColor();
                 ICommand command = new SortCommand(app);
-                var errors = command.Validate();
+                
+                var commandResult = command.Run();
 
-                if (errors.Count==0)
+                if (commandResult.HasErrors)
                 {
-                    command.Run();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Smooth detected error:  Smooth -h for help on Smooth ");
+                    commandResult.Errors.ForEach(x=> System.Console.WriteLine(string.Concat("Error: ", x)));
                 }
-                else{
-                    errors.ForEach(x=> System.Console.WriteLine(string.Concat("Error running command:", x)));
-                    app.ShowHelp();
-                    
-                }
-                System.Console.WriteLine("**************END EXECUTING SMOOTH********************");
-           
+                 Console.ForegroundColor = ConsoleColor.DarkBlue;
+                 
+                 Console.WriteLine("\nBye Bye -- Pew Pew Pew\n");
+                 Console.ResetColor();
+              
                 return 0;
+               
             });
-              
-              System.Console.WriteLine("**************ARGUMENTS********************");
-              args.ToList().ForEach(x=>System.Console.WriteLine(x));
-              System.Console.WriteLine("**************END ARGUMENTS********************");
-              
              app.Execute(args);
         }
 

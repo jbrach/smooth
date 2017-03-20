@@ -107,7 +107,7 @@ namespace Smooth.Library
         protected virtual bool IsSortableFile(FileInfo fi)
         {
             var sortable = false;
-            switch(fi.Extension)
+            switch(fi.Extension.ToLowerInvariant())
             {
                 case ".png":
                 case ".jpg":

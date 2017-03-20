@@ -8,7 +8,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             "program": "${workspaceRoot}/src/Smooth.Console/bin/Debug/netcoreapp1.1/win10-x64/Smooth.exe",
-            "args": ["-g --help "],
+            "args": [ "c:\\temp\\", "c:\\temp\\", "-s"],
             "cwd": "${workspaceRoot}",
             "externalConsole": false,
             "stopAtEntry": false,
