@@ -68,7 +68,7 @@ namespace Tests
             return new DateTime(_random.Next(1950,2017),_random.Next(1,12),_random.Next(1,25));
         }
 
-        public string GetRandomImageFile()
+        public string GetRandomImageFileName()
         {
              return _random.Next().ToString()+_random.Next(9999).ToString()+ ".jpg";
         }

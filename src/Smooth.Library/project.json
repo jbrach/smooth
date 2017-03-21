@@ -1,6 +1,6 @@
 {
   "version": "1.0.0-*",
-  "name": "SimpleFileSorter.Library",
+  "name": "Smooth.Library",
 
    "compilationOptions": {
         "xmlDoc": true,

@@ -7,8 +7,8 @@
         {
             "taskName": "build",
             "args": [
-                "${workspaceRoot}/src/SimpleFileSorter.Library/project.json",
-                "${workspaceRoot}/src/SimpleFileSorter.Console/project.json",
+                "${workspaceRoot}/src/Smooth.Library/project.json",
+                "${workspaceRoot}/src/Smooth.Console/project.json",
                 "${workspaceRoot}/test/project.json"
             ],
             "isBuildCommand": true,
