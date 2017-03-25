@@ -8,27 +8,23 @@ Write-Host "You have 2 seconds" -ForegroundColor Red -BackgroundColor White
 
 Start-Sleep -s 2
 
-Write-Host "Setting location" 
 
-Set-Location  C:\source\smooth\dotnetcore\src\Smooth.Library
+Write-Host $PSScriptRoot
 
-Write-Host $PSCommandPath
+Set-Location  $PSScriptRoot\src\Smooth.Library
 
-dotnet restore
-
-dotnet build
-
-Set-Location  C:\source\smooth\dotnetcore\src\Smooth.Console
-
-Write-Host $PSCommandPath
 
 dotnet restore
 
 dotnet build
 
-Set-Location  C:\source\smooth\dotnetcore\test
+Set-Location  $PSScriptRoot\src\Smooth.Console
 
-Write-Host $PSCommandPath
+dotnet restore
+
+dotnet build
+
+Set-Location  $PSScriptRoot\test
 
 dotnet restore
 
