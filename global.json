@@ -1,7 +1,7 @@
 {
     "projects": [
-        "src",
-        "test"
+        "dotnetcore/src",
+        "dotnetcore/test"
 
     ]
 }
