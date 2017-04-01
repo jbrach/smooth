@@ -99,6 +99,29 @@ namespace Tests
             Assert.True(_destinationDirectory.EnumerateDirectories().Count() > 1);
         }
 
+        [Fact]
+        public void Sorter_Run_Multiple_Times_Contains_Both_Images_Current_Year()
+        {
+
+            ImageHelper helper = new ImageHelper();
+            string imageFileName1 = helper.GetRandomImageFileName();
+            helper.CopyLarge(_sortingDirectory.FullName, DateTime.Now, imageFileName1);
+
+            var sorter = new Sorter(_sortingDirectory.FullName, _destinationDirectory.FullName);
+            sorter.RaiseFileSortEvent += HandleSortEvent;
+            sorter.Sort();
+
+            string imageFileName2 = helper.GetRandomImageFileName();
+            helper.CopyLarge(_sortingDirectory.FullName, DateTime.Now, imageFileName2);
+
+            var sorter1 = new Sorter(_sortingDirectory.FullName, _destinationDirectory.FullName);
+            sorter1.RaiseFileSortEvent += HandleSortEvent;
+            sorter1.Sort();
+
+
+            Assert.True(File.Exists(Path.Combine(_destinationDirectory.FullName, DateTime.Now.Year.ToString(), imageFileName1)));
+            Assert.True(File.Exists(Path.Combine(_destinationDirectory.FullName, DateTime.Now.Year.ToString(), imageFileName2)));
+        }
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls

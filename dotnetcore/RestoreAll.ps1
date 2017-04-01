@@ -2,8 +2,6 @@
 
 Clear-Host
 
-Write-Host Get-Location 
-
 Write-Host "You have 2 seconds" -ForegroundColor Red -BackgroundColor White
 
 Start-Sleep -s 2
@@ -32,8 +30,8 @@ dotnet build
 
 dotnet test
 
-Write-Host "You have 5 seconds" -ForegroundColor Red -BackgroundColor White
+Write-Host "Smooth - Pew Pew Pew" -ForegroundColor Red -BackgroundColor White
 
-Start-Sleep -s 5
+Start-Sleep -s 1
 
 
