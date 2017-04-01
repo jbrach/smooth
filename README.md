@@ -22,14 +22,12 @@
 ### Usage
 smooth -h
 ### Project setup  
-I started by figuring out how to reference projects.  Need to go deeper on how "dotnet build" command uses the Project.json and global.json for references.
-The Visual Code Documentation is not great but found a simple example http://www.natemcmaster.com/blog/2016/03/29/project-json/ to get me started
+I started by figuring out how to reference projects.  Required some digging into how  "dotnet build" command uses the Project.json and global.json for references.  The Visual Code Documentation is not great but found a simple example http://www.natemcmaster.com/blog/2016/03/29/project-json/ to get me started.
 
 ### Client
-Working on packaging console client
+Built the first console client
 .NET core Packaging research.  https://www.hanselman.com/blog/SelfcontainedNETCoreApplications.aspx
-Parsing Arguments .NET Core:  
-https://msdn.microsoft.com/en-us/magazine/mt763239.aspx
+Parsing Arguments .NET Core:  https://msdn.microsoft.com/en-us/magazine/mt763239.aspx
 https://github.com/iamarcel/dotnet-core-neat-console-starter
 
 
