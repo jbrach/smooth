@@ -1,12 +1,13 @@
 package main
 
 import (
-	"fmt"
 	"math"
+	"smooth"
 )
 
 func main() {
-	fmt.Println(pi(5000))
+	smooth.Run()
+	//fmt.Println(pi(5000))
 }
 
 // pi launches n goroutines to compute an
