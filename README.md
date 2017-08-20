@@ -2,33 +2,37 @@
 
 # SMOOTH
 
-    Smooth is a tool that will sort files based on the strategy picked. 
+Smooth is a tool that will sort files based on the strategy picked. 
+The goal behind Smooth is to learn stuff, compare strengths and weaknesses of multiple programming languages.
 
-    The goal behind Smooth is to learn and compare many different programming languages. 
+Test out Visual Studio Code editor 
 
-    End result will be a similar utility built out in many languages including DotNetCore, node, GO and Python
+Also I have not found a real simple image sorting utility that just works.  Move images off my camera, phones and other drives and drop them in the year the photo was taken.
+
+End result will be the same utility built out in many languages including DotNetCore, node, GO and Python, etc..
+
+
 
 # Install
 ....
- 
-
 
  
 ##  dotnetcore
-<p align="center">
-<img src="Media/smoothconsole_core.png" width="90%"> 
-</p>
+
 
 ### Usage
+#### help
 smooth -h
-### Project setup  
-I started by figuring out how to reference projects.  Required some digging into how  "dotnet build" command uses the Project.json and global.json for references.  The Visual Code Documentation is not great but found a simple example http://www.natemcmaster.com/blog/2016/03/29/project-json/ to get me started.
 
-### Client
-Built the first console client
-.NET core Packaging research.  https://www.hanselman.com/blog/SelfcontainedNETCoreApplications.aspx
-Parsing Arguments .NET Core:  https://msdn.microsoft.com/en-us/magazine/mt763239.aspx
-https://github.com/iamarcel/dotnet-core-neat-console-starter
+#### Stage option run through it and output the results without moving files
+smooth I:\DCIM\100D5000\ 'G:\My Pictures\' -s
+
+####  Strategy - The strategy used.  "year" will bucket files by year in destination folder.
+smooth I:\DCIM\100D5000\ 'G:\My Pictures\' year
+
+Here's a glimpse of Projectile in action:
+
+![smooth Screenshot](Media/smoothconsole_core.png)
 
 
 ## golang  
