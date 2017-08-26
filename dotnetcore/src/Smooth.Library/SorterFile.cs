@@ -38,16 +38,35 @@ namespace Smooth.Library
                 _file = file;
             }
 
-            public void Move()
+            public string Move()
             {
-                 var newFile = Path.Combine(_file.StagedFilePath, _file.FileToSort.Name);
+                var newFile = CreateNewFilePath();
 
                 if (!File.Exists(newFile))
                 {
-                    File.Move(_file.FileToSort.FullName, Path.Combine(_file.StagedFilePath, _file.FileToSort.Name));
+                    File.Move(_file.FileToSort.FullName, newFile);
                     _file.Moved = true;
                 }
+                return newFile;
 
+            }
+
+            public string CreateNewFilePath()
+            {
+                 var createDate = File.GetCreationTime(_file.FileToSort.FullName);
+                 var modifiedDate = File.GetLastWriteTime(_file.FileToSort.FullName);
+                 var sortDate = (createDate<=modifiedDate)? createDate: modifiedDate;
+
+                 var newfileName = string.Concat( 
+                                                "C_",sortDate.ToString("MMddyyyy", System.Globalization.CultureInfo.CurrentCulture),
+                                                "_", 
+                                                 "U_",System.DateTime.Now.ToString("MMddyyyy", System.Globalization.CultureInfo.CurrentCulture)
+                                                ,"_",_file.FileToSort.Name
+                                               );
+               
+                 var newFile = Path.Combine(_file.StagedFilePath, 
+                                             newfileName);
+                 return newFile;
             }
             public class Factory
             {

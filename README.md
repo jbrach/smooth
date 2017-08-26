@@ -9,13 +9,10 @@ Test out Visual Studio Code editor
 
 Also I have not found a real simple image sorting utility that just works.  Move images off my camera, phones and other drives and drop them in the year the photo was taken.
 
-End result will be the same utility built out in many languages including DotNetCore, node, GO and Python, etc..
-
+End result will be the same utility built out in many languages including DotNetCore and GO 
 
 
 # Install
-....
-
  
 ##  dotnetcore
 

@@ -97,7 +97,7 @@ namespace Smooth.Library
                     EventHandler<SorterFile> handler = RaiseFileSortEvent;
                     if (handler!=null)
                     {
-                         handler(this, new SorterFile(fi,_sortMoveToRootDirectory));
+                         handler(this, e: new SorterFile(fi,_sortMoveToRootDirectory));
                     }
 
                 }

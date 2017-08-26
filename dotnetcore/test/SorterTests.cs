@@ -123,6 +123,8 @@ namespace Tests
             Assert.True(File.Exists(Path.Combine(_destinationDirectory.FullName, DateTime.Now.Year.ToString(), imageFileName2)));
         }
 
+       
+
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
         protected virtual void Dispose(bool disposing)

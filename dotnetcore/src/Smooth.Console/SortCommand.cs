@@ -62,7 +62,8 @@ namespace Smooth
          
             if (!_showOnly)
             {
-                result.Move();
+                var newFile = result.Move();
+                Console.WriteLine("New File Name:", newFile);
                 if (e.Moved)
                 {
                     Console.ForegroundColor =ConsoleColor.Red;

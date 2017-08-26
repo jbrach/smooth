@@ -28,7 +28,7 @@ dotnet restore
 
 dotnet build
 
-dotnet test
+#dotnet test
 
 Write-Host "Smooth - Pew Pew Pew" -ForegroundColor Red -BackgroundColor White
 
