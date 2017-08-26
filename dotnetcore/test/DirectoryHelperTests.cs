@@ -1,5 +1,6 @@
 ﻿using Xunit;
 using Smooth.Library;
+using Tests.TestingHelpers;
 
 namespace Tests
 {

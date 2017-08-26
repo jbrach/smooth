@@ -4,7 +4,7 @@
     "isShellCommand": true,
     "args": [],
     "tasks": [
-        {
+       /* {
             "taskName": "build",
             "args": [
                 "${workspaceRoot}/dotnetcore/src/Smooth.Library/project.json",
@@ -13,6 +13,6 @@
             ],
             "isBuildCommand": true,
             "problemMatcher": "$msCompile"
-        }
+        }*/
     ]
 }

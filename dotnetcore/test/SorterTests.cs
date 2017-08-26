@@ -3,6 +3,8 @@ using Smooth.Library;
 using System.IO;
 using System;
 using System.Linq;
+using Tests.TestingHelpers;
+using Smooth.Library.FileNaming;
 
 namespace Tests
 {
@@ -37,14 +39,16 @@ namespace Tests
 
             ImageHelper helper = new ImageHelper();
             string imageFileName = helper.GetRandomImageFileName();
-            helper.CopyLarge(_sortingDirectory.FullName, DateTime.Now, imageFileName);
-
+            var fileInfo = helper.CopyLarge(_sortingDirectory.FullName, DateTime.Now, imageFileName);
+            var destinationName = (new CreateDateAndUploadDateStrategy(fileInfo)).GenerateName();
+            
             var sorter = new Sorter(_sortingDirectory.FullName, _destinationDirectory.FullName);
             sorter.RaiseFileSortEvent += HandleSortEvent;
 
             sorter.Sort();
 
-            Assert.True(File.Exists(Path.Combine(_destinationDirectory.FullName, DateTime.Now.Year.ToString(), imageFileName)));
+           
+            Assert.True(File.Exists(Path.Combine(_destinationDirectory.FullName,  DateTime.Now.Year.ToString(),  destinationName)));
         }
 
         private void HandleSortEvent(object sender, SorterFile e)
@@ -105,22 +109,28 @@ namespace Tests
 
             ImageHelper helper = new ImageHelper();
             string imageFileName1 = helper.GetRandomImageFileName();
-            helper.CopyLarge(_sortingDirectory.FullName, DateTime.Now, imageFileName1);
+            var fileInfo1 = helper.CopyLarge(_sortingDirectory.FullName, DateTime.Now, imageFileName1);
 
+            var generatedName1 = new CreateDateAndUploadDateStrategy(fileInfo1);
+            var name1 = generatedName1.GenerateName();
+            
             var sorter = new Sorter(_sortingDirectory.FullName, _destinationDirectory.FullName);
             sorter.RaiseFileSortEvent += HandleSortEvent;
             sorter.Sort();
 
             string imageFileName2 = helper.GetRandomImageFileName();
-            helper.CopyLarge(_sortingDirectory.FullName, DateTime.Now, imageFileName2);
+            var fileInfo2 = helper.CopyLarge(_sortingDirectory.FullName, DateTime.Now, imageFileName2);
+
+            var generatedName2 = new CreateDateAndUploadDateStrategy(fileInfo2);
+            var name2 = generatedName2.GenerateName();
 
             var sorter1 = new Sorter(_sortingDirectory.FullName, _destinationDirectory.FullName);
             sorter1.RaiseFileSortEvent += HandleSortEvent;
             sorter1.Sort();
 
-
-            Assert.True(File.Exists(Path.Combine(_destinationDirectory.FullName, DateTime.Now.Year.ToString(), imageFileName1)));
-            Assert.True(File.Exists(Path.Combine(_destinationDirectory.FullName, DateTime.Now.Year.ToString(), imageFileName2)));
+         
+            Assert.True(File.Exists(Path.Combine(_destinationDirectory.FullName,  DateTime.Now.Year.ToString(), name1)));
+            Assert.True(File.Exists(Path.Combine(_destinationDirectory.FullName,  DateTime.Now.Year.ToString(), name2)));
         }
 
        

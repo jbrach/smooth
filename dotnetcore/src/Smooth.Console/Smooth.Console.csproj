@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <DebugType>portable</DebugType>
+    <AssemblyName>smooth</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>Smooth.Console</PackageId>
+    <RuntimeIdentifiers>win10-x64;osx.10.10-x64;ubuntu.14.04-x64;ubuntu.16.10-x64</RuntimeIdentifiers>
+     </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Smooth.Library\Smooth.Library.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CliHelpers" Version="1.1.2.38" />
+  </ItemGroup>
+
+</Project>

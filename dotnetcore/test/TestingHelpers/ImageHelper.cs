@@ -2,7 +2,7 @@ using System.IO;
 using System.Reflection;
 using System;
 
-namespace Tests
+namespace Tests.TestingHelpers
 {
     public class ImageHelper
     {
@@ -35,42 +35,46 @@ namespace Tests
 
         }
 
-        public void CopyMedium(string directory, DateTime createDate,string fileName = File_2012_M)
+        public FileInfo CopyMedium(string directory, DateTime createDate, string fileName = File_2012_M)
         {
-         CopyFile(Medium2012ImagePath, Path.Combine(directory, fileName), createDate);
-         }
-
-        public void CopySmall(string directory,  DateTime createDate,string fileName = File_2012_S)
-        {
-            CopyFile(Small2012ImagePath, Path.Combine(directory, fileName), createDate);
-        }
-        public void CopyLarge(string directory, DateTime createDate, string fileName = File_2014_L)
-        {
-            CopyFile(Large2014ImagePath, Path.Combine(directory, fileName), createDate);
-            
+            return CopyFile(Medium2012ImagePath, Path.Combine(directory, fileName), createDate);
         }
 
+        public FileInfo CopySmall(string directory, DateTime createDate, string fileName = File_2012_S)
+        {
+            return CopyFile(Small2012ImagePath, Path.Combine(directory, fileName), createDate);
+        }
+        public FileInfo CopyLarge(string directory, DateTime createDate, string fileName = File_2014_L)
+        {
+           return CopyFile(Large2014ImagePath, Path.Combine(directory, fileName), createDate);
 
-        private void CopyFile(string source, string destination, DateTime createDate)
+        }
+
+
+        private FileInfo CopyFile(string source, string destination, DateTime createDate)
         {
             if (File.Exists(destination))
             {
                 throw new Exception("File Exists");
             }
-            else {
+            else
+            {
                 File.Copy(source, destination);
-                File.SetCreationTime(destination,createDate);
+                File.SetCreationTime(destination, createDate);
+                File.SetLastWriteTime(destination, createDate);
             }
+
+            return new FileInfo(destination);
         }
 
         public DateTime GetRandomDate()
         {
-            return new DateTime(_random.Next(1950,2017),_random.Next(1,12),_random.Next(1,25));
+            return new DateTime(_random.Next(1950, DateTime.Now.Year), _random.Next(1, 12), _random.Next(1, 25));
         }
 
         public string GetRandomImageFileName()
         {
-             return _random.Next().ToString()+_random.Next(9999).ToString()+ ".jpg";
+            return _random.Next().ToString() + _random.Next(9999).ToString() + ".jpg";
         }
 
     }

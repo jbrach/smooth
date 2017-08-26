@@ -31,6 +31,8 @@ bld/
 msbuild.log
 msbuild.err
 msbuild.wrn
+[Bb]ackup/
+
 
 # Visual Studio 2015
 .vs/

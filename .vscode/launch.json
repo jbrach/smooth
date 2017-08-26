@@ -18,23 +18,9 @@
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach",
-            "processId": "${command.pickProcess}"
-        },
-        {
-            "name": "Launch",
-            "type": "go",
-            "request": "launch",
-            "mode": "debug",
-            "remotePath": "",
-            "port":2345,
-            "host": "127.0.0.1",
-            "program": "${workspaceRoot}\\golang\\src\\practice\\boring.go",
-             "env": {
-                  "GOPATH": "${env.GOPATH};${workspaceRoot}\\golang"
-            },
-             "args": [ ],
-             "showLog": true
-          }
+            "processId": "${command}"
+        }
+      
 
     ]
 }

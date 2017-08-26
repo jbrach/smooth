@@ -11,22 +11,27 @@ Write-Host $PSScriptRoot
 
 Set-Location  $PSScriptRoot\src\Smooth.Library
 
+dotnet clean
 
 dotnet restore
 
-dotnet build
+dotnet msbuild
 
 Set-Location  $PSScriptRoot\src\Smooth.Console
 
+dotnet clean
+
 dotnet restore
 
-dotnet build
+dotnet msbuild
 
 Set-Location  $PSScriptRoot\test
 
+dotnet clean
+
 dotnet restore
 
-dotnet build
+dotnet msbuild
 
 #dotnet test
 
