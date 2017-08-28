@@ -7,7 +7,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}/dotnetcore/src/Smooth.Console/bin/Debug/netcoreapp1.1/win10-x64/Smooth.exe",
+            "program": "${workspaceRoot}/dotnetcore/src/Smooth.Console/bin/Debug/netcoreapp2.0/win10-x64/Smooth.exe",
             "args": [ "c:\\temp\\Smooth\\Images", "c:\\temp\\Smooth\\Root", "-s" ],
             "cwd": "${workspaceRoot}",
             "externalConsole": false,

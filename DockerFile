@@ -2,11 +2,9 @@ FROM microsoft/dotnet
 
 WORKDIR /smooth/
 
-
 COPY . .
 
-RUN ls
-
+#Change to the test project
 WORKDIR test/
 
 RUN ls
