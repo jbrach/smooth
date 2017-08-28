@@ -1,13 +1,20 @@
-FROM microsoft/dotnet:runtime
-WORKDIR /dotnetapp
+FROM microsoft/dotnet
 
-# Copy csproj and restore as distinct layers
-COPY *.csproj ./
+WORKDIR /smooth/
+
+
+COPY . .
+
+RUN ls
+
+WORKDIR test/
+
+RUN ls
+
 RUN dotnet restore
 
-# Copy everything else and build
-COPY . ./
-RUN dotnet publish -c Release -o out
+# run tests on docker build
+RUN dotnet test
 
-# Build runtime image
-ENTRYPOINT ["dotnet", "out/dotnetapp.dll"]
+# run tests on docker run
+ENTRYPOINT ["dotnet", "test"]

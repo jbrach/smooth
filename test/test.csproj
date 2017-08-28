@@ -8,15 +8,6 @@
   </PropertyGroup>
 
 
-   <ItemGroup>
-    <None Update=".\**\*">
-      <Link>images/*</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="images\*.*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
 
   <ItemGroup>
      
