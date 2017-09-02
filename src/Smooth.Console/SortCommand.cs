@@ -64,7 +64,7 @@ namespace Smooth
             {
                 var newFile = result.Move();
                 Console.WriteLine("New File Name:", newFile);
-                if (e.Moved)
+                if (result.Moved)
                 {
                     Console.ForegroundColor =ConsoleColor.Red;
                     Console.WriteLine(string.Format("Moved File: {0} To Location {1}", e.FileToSort.Name,  e.StagedFilePath));
