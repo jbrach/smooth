@@ -19,9 +19,13 @@
   <ItemGroup>
      
     <ProjectReference Include="..\src\Smooth.Library\Smooth.Library.csproj" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0-preview-20170628-02" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0-preview-20170810-02" />
     <PackageReference Include="xunit" Version="2.2.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
+    <PackageReference Include="OpenCover" Version="4.6.519" />
+    <PackageReference Include="Microsoft.CodeCoverage" Version="1.0.3" />
+    
+    
   </ItemGroup>
 
 </Project>

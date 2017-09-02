@@ -1,0 +1,10 @@
+dist: trusty
+sudo: required
+language: csharp
+mono: none
+dotnet: 2.0.0
+solution: smooth.sln
+script:
+  - dotnet restore
+  - dotnet test ./test/ -c Release
+  

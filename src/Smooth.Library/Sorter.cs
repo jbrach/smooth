@@ -14,11 +14,11 @@ namespace Smooth.Library
 
         //This delegate can be used to point to methods
         //which return void and take a string.
-        public delegate void SortHandler(SorterFile sort);
+        public delegate void SortHandler(StageFileCommand sort);
 
         //This event can cause any method which conforms
         //to MyEventHandler to be called.
-        public event EventHandler<SorterFile> RaiseFileSortEvent;
+        public event EventHandler<StageFileCommand> RaiseFileSortEvent;
 
 
     /// <summary>
@@ -54,10 +54,6 @@ namespace Smooth.Library
             // than the application provides.
             catch (UnauthorizedAccessException e)
             {
-                // This code just writes out the message and continues to recurse.
-                // You may decide to do something different here. For example, you
-                // can try to elevate your privileges and access the file again.
-                //log.Add(e.Message);
                 System.Diagnostics.Debug.WriteLine(e.Message);
 
             }
@@ -94,10 +90,10 @@ namespace Smooth.Library
                
                 if (IsSortableFile(fi))
                 {
-                    EventHandler<SorterFile> handler = RaiseFileSortEvent;
+                    EventHandler<StageFileCommand> handler = RaiseFileSortEvent;
                     if (handler!=null)
                     {
-                         handler(this, e: new SorterFile(fi,_sortMoveToRootDirectory));
+                         handler(this, e: new StageFileCommand(fi,_sortMoveToRootDirectory));
                     }
 
                 }

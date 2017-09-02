@@ -10,11 +10,11 @@ namespace Smooth.Library
         private readonly string _sourceDirectory;
         private readonly string _rootDirectory;
 
-        public SmoothValidator(string strategy, string sourceDirectory, string rootDirectory)
+        public SmoothValidator(string strategy, string sourceDirectory, string destinationDirectory)
         {
                 _strategy = strategy;
                 _sourceDirectory = sourceDirectory;
-                _rootDirectory = rootDirectory;
+                _rootDirectory = destinationDirectory;
         }
 
          public IValidationResult Validate()
@@ -37,7 +37,7 @@ namespace Smooth.Library
             catch (DirectoryNotFoundException)
             {
                 dirException = true;
-                errors.Add(string.Format("Root Directory {0} does not exist.", _rootDirectory));
+                errors.Add(string.Format("Destination Directory {0} does not exist.", _rootDirectory));
             }
 
             try
@@ -59,13 +59,6 @@ namespace Smooth.Library
                     @"\nPlease modify the destination directory to another location outside of the path directory being sorted." +
                     @"");
                 }
-
-                // var parentUri = new Uri(source.GetFullPath());
-                // var childUri = new Uri(root.GetFullPath());
-                // if (parentUri == childUri || parentUri.IsBaseOf(childUri))
-                // {
-                //     errors.Add("Destination Directory should not be a child of directory being sorted. \nPlease modify the destination directory to another location.");
-                // }
             }
             return new SmoothValidationResult(errors);
         }
