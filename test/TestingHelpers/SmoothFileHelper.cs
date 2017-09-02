@@ -12,7 +12,7 @@ namespace Tests.TestingHelpers
            SortingDirectory = Directory.CreateDirectory(Path.Combine(rootPath, "testing_sorting_" + r.Next(9999).ToString()));
            DestinationDirectory = Directory.CreateDirectory(Path.Combine(rootPath, "testing_destination_" + r.Next(99999).ToString()));
            ImageHelper helper = new ImageHelper();
-           TestFile = helper.CopyLarge(SortingDirectory.FullName, DateTime.Now);
+           TestFile = helper.CopySmall(SortingDirectory.FullName, DateTime.Now,fileName);
            
         }
 

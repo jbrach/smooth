@@ -54,7 +54,7 @@ namespace Smooth
         }
 
         
-        private void HandleSortEvent(object sender, SorterFile e)
+        private void HandleSortEvent(object sender, StageFileCommand e)
         {
             var result = e.Stage(new YearSortStrategy());
             Console.ForegroundColor =ConsoleColor.Yellow;

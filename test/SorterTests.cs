@@ -51,7 +51,7 @@ namespace Tests
             Assert.True(File.Exists(Path.Combine(_destinationDirectory.FullName,  DateTime.Now.Year.ToString(),  destinationName)));
         }
 
-        private void HandleSortEvent(object sender, SorterFile e)
+        private void HandleSortEvent(object sender, StageFileCommand e)
         {
             e.Stage(new YearSortStrategy()).Move();
         }
