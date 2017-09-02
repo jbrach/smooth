@@ -1,5 +1,7 @@
 
 
+[![Build Status](https://travis-ci.org/jbrach/smooth.svg?branch=master)]
+
 # SMOOTH
 
 Smooth is a tool that will sort files based on the strategy picked. 
