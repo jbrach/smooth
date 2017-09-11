@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using Tests.TestingHelpers;
 using Smooth.Library.FileNaming;
+using System.Collections.Generic;
 
 namespace Tests
 {
@@ -41,14 +42,14 @@ namespace Tests
             string imageFileName = helper.GetRandomImageFileName();
             var fileInfo = helper.CopyLarge(_sortingDirectory.FullName, DateTime.Now, imageFileName);
             var destinationName = (new CreateDateAndUploadDateStrategy(fileInfo)).GenerateName();
-            
+
             var sorter = new Sorter(_sortingDirectory.FullName, _destinationDirectory.FullName);
             sorter.RaiseFileSortEvent += HandleSortEvent;
 
             sorter.Sort();
 
-           
-            Assert.True(File.Exists(Path.Combine(_destinationDirectory.FullName,  DateTime.Now.Year.ToString(),  destinationName)));
+
+            Assert.True(File.Exists(Path.Combine(_destinationDirectory.FullName, DateTime.Now.Year.ToString(), destinationName)));
         }
 
         private void HandleSortEvent(object sender, StageFileCommand e)
@@ -77,9 +78,9 @@ namespace Tests
         }
 
 
-        
+
         [Fact]
-        
+
         public void Move_Multipile_Files_Creates_MultipleDirectories_Given_LargerNumber_Files()
         {
 
@@ -113,7 +114,7 @@ namespace Tests
 
             var generatedName1 = new CreateDateAndUploadDateStrategy(fileInfo1);
             var name1 = generatedName1.GenerateName();
-            
+
             var sorter = new Sorter(_sortingDirectory.FullName, _destinationDirectory.FullName);
             sorter.RaiseFileSortEvent += HandleSortEvent;
             sorter.Sort();
@@ -128,12 +129,12 @@ namespace Tests
             sorter1.RaiseFileSortEvent += HandleSortEvent;
             sorter1.Sort();
 
-         
-            Assert.True(File.Exists(Path.Combine(_destinationDirectory.FullName,  DateTime.Now.Year.ToString(), name1)));
-            Assert.True(File.Exists(Path.Combine(_destinationDirectory.FullName,  DateTime.Now.Year.ToString(), name2)));
+
+            Assert.True(File.Exists(Path.Combine(_destinationDirectory.FullName, DateTime.Now.Year.ToString(), name1)));
+            Assert.True(File.Exists(Path.Combine(_destinationDirectory.FullName, DateTime.Now.Year.ToString(), name2)));
         }
 
-       
+
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
@@ -170,5 +171,7 @@ namespace Tests
             // GC.SuppressFinalize(this);
         }
         #endregion
+
+
     }
 }
