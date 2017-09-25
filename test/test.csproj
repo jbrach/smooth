@@ -24,7 +24,9 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
     <PackageReference Include="OpenCover" Version="4.6.519" />
     <PackageReference Include="Microsoft.CodeCoverage" Version="1.0.3" />
-    
+    <PackageReference Include="MongoDB.Driver" Version="2.4.4" />
+    <PackageReference Include="MongoDB.Driver.Core" Version="2.4.4" />
+    <PackageReference Include="MongoDB.Bson" Version="2.4.4" />
     
   </ItemGroup>
 
