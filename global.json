@@ -1,6 +1,7 @@
 {
     "projects": [
-        "dotnetcore/src",
+        "dotnetcore/src/Smooth.Console",
+        "dotnetcore/src/Smooth.Library",
         "dotnetcore/test"
 
     ]

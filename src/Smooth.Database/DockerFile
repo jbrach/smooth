@@ -1,11 +1,42 @@
 
+FROM ubuntu
+MAINTAINER brachjoe@gmail.com
+
+RUN \
+   apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10 && \
+   echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list && \
+   apt-get update && \
+   apt-get install -y mongodb-org
+
+VOLUME ["/data/db"]
+WORKDIR /data
+
+EXPOSE 27017
+
+CMD ["mongod"]
+
+docker run -d --name=mongo -v /data/mongodb:/data/db -p 127.0.0.1:27017:27017 -p 127.0.0.1:28017:28017 mongo:3.4 -smallfiles --rest --httpinterface
+
+
 #Docker Command to create volume smooth-data on the busybox container
-docker create -v /var/lib/postgresql/data --name smooth-data busybox
+#docker create -v /var/lib/postgresql/data --name smooth-data busybox
 
 #link the volumn to the lastest postgres image
-docker run --name local-postgres -e POSTGRES_PASSWORD=password -d  --volumes-from smooth-data postgres
+#docker run --name local-postgres -e POSTGRES_PASSWORD=password -d  --volumes-from smooth-data postgres
 #Important that the port is linked correctly.   Add -p 5432:5432 to above and was able to connect to docker container. 
-docker run --name local-postgres -e POSTGRES_PASSWORD=password -d -p 5432:5432 --volumes-from smooth-data postgres 
+#docker run --name local-postgres -e POSTGRES_PASSWORD=password -d -p 5432:5432 --volumes-from smooth-data postgres 
 
 #run it ..  need to research this one.   
-docker run -it --link local-postgres:postgres --rm postgres sh -c 'exec psql -h "$POSTGRES_PORT_5432_TCP_ADDR" -p "$POSTGRES_PORT_5432_TCP_PORT" -U postgres'
+#docker run -it --link local-postgres:postgres --rm postgres sh -c 'exec psql -h "$POSTGRES_PORT_5432_TCP_ADDR" -p "$POSTGRES_PORT_5432_TCP_PORT" -U postgres'
+
+#docker run --name mongo-database -d mongo
+#docker exec -it mongo-database bash
+
+#use admin
+#db.createUser(
+#{
+#user: "db_user",
+#pwd: "kenneth",
+#roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
+#}
+#)
