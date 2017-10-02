@@ -54,7 +54,7 @@ namespace Tests
 
         private void HandleSortEvent(object sender, StageFileCommand e)
         {
-            e.Stage(new YearSortStrategy()).Move();
+            e.Stage(new YearSortStrategy()).Move(false);
         }
 
 

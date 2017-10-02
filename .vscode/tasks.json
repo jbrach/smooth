@@ -7,7 +7,7 @@
         {
             "taskName": "build",
             "args": [
-                 "${workspaceRoot}/dotnetcore/src/Smooth.Console/project.json"
+                 "${workspaceRoot}/src/Smooth.Console/Smooth.Console.csproj"
              ],
             "isBuildCommand": true,
             "problemMatcher": "$msCompile"

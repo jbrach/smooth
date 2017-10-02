@@ -1,26 +1,24 @@
 {
     "version": "0.2.0",
     "configurations": [
-       
         {
             "name": ".NET Core Launch (console)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}/dotnetcore/src/Smooth.Console/bin/Debug/netcoreapp2.0/win10-x64/Smooth.exe",
+            "program": "${workspaceRoot}/src/Smooth.Console/bin/Debug/netcoreapp2.0/win10-x64/Smooth.exe",
             "args": [ "c:\\temp\\Smooth\\Images", "c:\\temp\\Smooth\\Root", "-s" ],
             "cwd": "${workspaceRoot}",
-            "externalConsole": false,
-            "stopAtEntry": false,
-            "internalConsoleOptions": "openOnSessionStart"
+            "stopAtEntry": true,
+            "internalConsoleOptions": "openOnSessionStart",
+            "console": "internalConsole"
+           
+            
         },
         {
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach",
-            "processId": "${command}"
-        }
-      
-
-    ]
+            "processId": "${command:pickProcess}"
+        } 
 }

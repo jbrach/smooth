@@ -13,7 +13,7 @@ Coming soon
 
 ### Usage Example
 
-smooth I:\DCIM\100D5000\ 'G:\My Pictures\' year
+smooth I:\\DCIM\\100D5000\\ 'G:\\My Pictures\\' year
 
 #### help
 
@@ -21,7 +21,7 @@ smooth -h
 
 #### Stage option run through it and output the results without moving files
 
-smooth I:\DCIM\100D5000\ 'G:\My Pictures\' -s
+smooth I:\\DCIM\\100D5000\\ 'G:\\My Pictures\\' -s
 
 ### Example
 

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <DebugType>portable</DebugType>
+    <DebugType>full</DebugType>
     <AssemblyName>Smooth.Library</AssemblyName>
     <PackageId>Smooth.Library</PackageId>
     <RuntimeIdentifiers>win10-x64;osx.10.10-x64;ubuntu.14.04-x64;ubuntu.16.10-x64</RuntimeIdentifiers>
@@ -13,5 +13,12 @@
   <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish">
     <Exec Command="gen.cmd" />
   </Target>
+
+  
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" Version="2.4.4" />
+    <PackageReference Include="MongoDB.Driver.Core" Version="2.4.4" />
+    <PackageReference Include="MongoDB.Bson" Version="2.4.4" />
+  </ItemGroup>
 
 </Project>

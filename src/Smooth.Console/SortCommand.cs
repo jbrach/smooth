@@ -10,6 +10,8 @@ namespace Smooth
     {
         private readonly CommandLineApplication _app;
         private bool _showOnly = false;
+
+        private bool _deleteSourceFile = false;
         private Stopwatch _watch;
 
         public SortCommand(CommandLineApplication commandLineApp)
@@ -19,7 +21,7 @@ namespace Smooth
              
             _app = commandLineApp;
             var showOption =  commandLineApp.Options.FirstOrDefault(x=>x.LongName=="show");
-            
+           
              if (showOption!=null)
             {
                 var value = showOption.Values.FirstOrDefault();
@@ -28,6 +30,18 @@ namespace Smooth
                     _showOnly = (value == "on");
                 }
             } 
+
+              var deleteSourceOption =  commandLineApp.Options.FirstOrDefault(x=>x.LongName=="move");
+
+            if (deleteSourceOption!=null)
+            {
+                var value = deleteSourceOption.Values.FirstOrDefault();
+                if (!string.IsNullOrEmpty(value))
+                {
+                    _deleteSourceFile = (value == "on");
+                }
+            } 
+          
         }
         public IValidationResult Run()
         {
@@ -56,15 +70,15 @@ namespace Smooth
         
         private void HandleSortEvent(object sender, StageFileCommand e)
         {
-            var result = e.Stage(new YearSortStrategy());
+            var stagingResults = e.Stage(new YearSortStrategy());
             Console.ForegroundColor =ConsoleColor.Yellow;
             Console.WriteLine(string.Format("Staged File: {0}  To Location {1}", e.FileToSort.FullName,  e.StagedFilePath));
          
             if (!_showOnly)
             {
-                var newFile = result.Move();
+                var newFile = stagingResults.Move(_deleteSourceFile);
                 Console.WriteLine("New File Name:", newFile);
-                if (result.Moved)
+                if (stagingResults.Moved)
                 {
                     Console.ForegroundColor =ConsoleColor.Red;
                     Console.WriteLine(string.Format("Moved File: {0} To Location {1}", e.FileToSort.Name,  e.StagedFilePath));
