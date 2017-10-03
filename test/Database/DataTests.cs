@@ -22,7 +22,7 @@ namespace Test.Database
     {
 
 
-        [Fact]
+        //[Fact]
         public void ConnectLocalMongo()
         {
             //TODO Inject MongoContextFactory.   This layer should not know about the database or should it?  

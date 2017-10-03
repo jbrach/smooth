@@ -6,7 +6,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}/src/Smooth.Console/bin/Debug/netcoreapp2.0/win10-x64/Smooth.exe",
+            "program": "${workspaceRoot}/src/Smooth.Console/bin/Debug/netcoreapp2.0/Smooth.Console.dll",
             "args": [ "c:\\temp\\Smooth\\Images", "c:\\temp\\Smooth\\Root", "-s" ],
             "cwd": "${workspaceRoot}",
             "stopAtEntry": true,
@@ -21,4 +21,5 @@
             "request": "attach",
             "processId": "${command:pickProcess}"
         } 
+    ]
 }
