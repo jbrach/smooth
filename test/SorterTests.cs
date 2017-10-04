@@ -84,9 +84,6 @@ namespace Tests
         public void Move_Multipile_Files_Creates_MultipleDirectories_Given_LargerNumber_Files()
         {
 
-            //TODO Figure out how to test performance.  Single Threaded verse async, parallal  Client of sort library will decide. 
-
-
             int i = 0;
             while (i < 100)
             {
@@ -144,31 +141,21 @@ namespace Tests
             {
                 if (disposing)
                 {
-                    // TODO: dispose managed state (managed objects).
                     _sortingDirectory.Delete(true);
                     _destinationDirectory.Delete(true);
                 }
 
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
-
-                disposedValue = true;
+                 disposedValue = true;
             }
         }
 
-        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-        // ~SorterTests() {
-        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-        //   Dispose(false);
-        // }
-
+     
         // This code added to correctly implement the disposable pattern.
         public void Dispose()
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
-            // TODO: uncomment the following line if the finalizer is overridden above.
-            // GC.SuppressFinalize(this);
+          
         }
         #endregion
 

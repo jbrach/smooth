@@ -1,8 +1,23 @@
-     
-     
- 
-Project setup --> I started by figuring out how to reference projects.
-Need to go deeper on how "dotnet build" command uses the Project.json and global.json for references.
+#Smooth
+Console
+Library
+Database
+
+##Docker
+TBD Instructions to setup docker environment
+
+##Database
+
+Using Mongo DB
+
+##References
+
+<http://www.natemcmaster.com/blog/2016/03/29/project-json/> 
+<https://www.hanselman.com/blog/SelfcontainedNETCoreApplications.aspx>
+<https://msdn.microsoft.com/en-us/magazine/mt763239.aspx>
+<https://github.com/iamarcel/dotnet-core-neat-console-starter>
+
+##History
 The Visual Code Documentation is not great but found a simple example <http://www.natemcmaster.com/blog/2016/03/29/project-json/> to get me started
 
 Loving Visual Studio Code editor.   Feels similar to sublime.   Not as intrusive as Visual Studio for .NET. 

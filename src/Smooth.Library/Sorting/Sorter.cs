@@ -110,6 +110,9 @@ namespace Smooth.Library
                 case ".mod":
                     sortable = true;
                     break;
+                default:
+                    sortable = false;
+                    break;
 
             }
             return sortable;

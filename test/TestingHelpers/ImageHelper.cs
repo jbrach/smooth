@@ -7,19 +7,19 @@ namespace Tests.TestingHelpers
     public class ImageHelper
     {
 
-        public const string File_2012_M = "2012_M.jpg";
+        public static readonly string File_2012_M = "2012_M.jpg";
 
-        public const string File_2012_S = "2012_S.jpg";
+        public static readonly string File_2012_S = "2012_S.jpg";
 
-        public const string File_2013_M = "2013_M.jpg";
+        public static readonly string File_2013_M = "2013_M.jpg";
 
-        public const string File_2014_L = "2014_L.jpg";
-        private Random _random;
+        public static readonly string File_2014_L = "2014_L.jpg";
+        private readonly Random _random;
 
-        public string Medium2012ImagePath { get { return Path.Combine(ImageHelper.GetAssemblyDirectory(), "images/", File_2012_M); } }
-        public string Small2012ImagePath { get { return Path.Combine(ImageHelper.GetAssemblyDirectory(), "images/", File_2012_S); } }
-        public string Medium2013ImagePath { get { return Path.Combine(ImageHelper.GetAssemblyDirectory(), "images/", File_2013_M); } }
-        public string Large2014ImagePath { get { return Path.Combine(ImageHelper.GetAssemblyDirectory(), "images/", File_2014_L); } }
+        public static string Medium2012ImagePath { get { return Path.Combine(ImageHelper.GetAssemblyDirectory(), "images/", File_2012_M); } }
+        public static string Small2012ImagePath { get { return Path.Combine(ImageHelper.GetAssemblyDirectory(), "images/", File_2012_S); } }
+        public static string Medium2013ImagePath { get { return Path.Combine(ImageHelper.GetAssemblyDirectory(), "images/", File_2013_M); } }
+        public static string Large2014ImagePath { get { return Path.Combine(ImageHelper.GetAssemblyDirectory(), "images/", File_2014_L); } }
 
         public ImageHelper()
         {
@@ -35,27 +35,41 @@ namespace Tests.TestingHelpers
 
         }
 
-        public FileInfo CopyMedium(string directory, DateTime createDate, string fileName = File_2012_M)
+        internal FileInfo CopyMedium(string directory, DateTime createDate)
+        {
+            return CopyMedium(directory, createDate, File_2012_M);
+        }
+
+        internal FileInfo CopyMedium(string directory, DateTime createDate, string fileName)
         {
             return CopyFile(Medium2012ImagePath, Path.Combine(directory, fileName), createDate);
         }
 
-        public FileInfo CopySmall(string directory, DateTime createDate, string fileName = File_2012_S)
+        internal FileInfo CopySmall(string directory, DateTime createDate)
+        {
+            return CopySmall(directory, createDate, File_2012_S);
+        }
+        internal FileInfo CopySmall(string directory, DateTime createDate, string fileName)
         {
             return CopyFile(Small2012ImagePath, Path.Combine(directory, fileName), createDate);
         }
-        public FileInfo CopyLarge(string directory, DateTime createDate, string fileName = File_2014_L)
-        {
-           return CopyFile(Large2014ImagePath, Path.Combine(directory, fileName), createDate);
 
+        internal FileInfo CopyLarge(string directory, DateTime createDate)
+        {
+            return CopyLarge(directory, createDate, File_2014_L);
         }
 
+        internal FileInfo CopyLarge(string directory, DateTime createDate, string fileName)
+        {
+            return CopyFile(Large2014ImagePath, Path.Combine(directory, fileName), createDate);
+
+        }
 
         private FileInfo CopyFile(string source, string destination, DateTime createDate)
         {
             if (File.Exists(destination))
             {
-                throw new Exception("File Exists");
+                throw new ArgumentException(string.Concat("File already Exists:", destination), "destination");
             }
             else
             {
