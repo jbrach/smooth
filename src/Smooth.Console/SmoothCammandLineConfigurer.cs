@@ -55,16 +55,9 @@ namespace Smooth
 
         private int RunCommand(CommandLineApplication app)
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-
-            Console.WriteLine("___________________________________________");
-            Console.WriteLine("Running smooth with the following Arguments");
-            Console.WriteLine("___________________________________________");
-            Console.WriteLine("");
+            ("Running smooth with the following Arguments\n\n").Log();
           
-            app.Arguments.ForEach(x => System.Console.WriteLine(string.Concat(x.Name, " \t", x.Value)));
-            Console.WriteLine("");
-            Console.ResetColor();
+            app.Arguments.ForEach(x => string.Concat(x.Name, " \t", x.Value).Log());
             ICommand command = new SortCommand(app);
 
             var commandResult = command.Run();
@@ -72,16 +65,16 @@ namespace Smooth
             if (commandResult.HasErrors)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Smooth detected error:  Smooth -h for help on Smooth ");
-                commandResult.Errors.ForEach(x => System.Console.WriteLine(string.Concat("Error: ", x)));
+                "Smooth detected error:  Smooth -h for help on Smooth ".Log(ConsoleColor.Red);
+                commandResult.Errors.ForEach(x => string.Concat("Error: ", x).Log(ConsoleColor.Red));
             }
-            Console.ForegroundColor = ConsoleColor.Green;
-
-            Console.WriteLine("\nBye Bye -- Pew Pew Pew\n");
+            
+            ("Bye Bye -- Pew Pew Pew").Log();
             Console.ResetColor();
 
             return 0;
         }
+
 
     }
 }

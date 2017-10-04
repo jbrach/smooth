@@ -51,8 +51,8 @@ namespace Smooth
 
             var validator = new SmoothValidator(strategy.Value, sourceDirectory.Value,rootDirectory.Value);
             var result = validator.Validate();
-            //Validate sub ICommands if they ever get created
-            if (!result.HasErrors)
+        
+           if (!result.HasErrors)
             {
               
                 var sorter = new Sorter(sourceDirectory.Value, rootDirectory.Value);
@@ -60,8 +60,7 @@ namespace Smooth
                _watch.Start();
                 sorter.Sort();
                _watch.Stop();
-                Console.ForegroundColor =ConsoleColor.Yellow;
-                Console.WriteLine(string.Format("Total Time For Sorting {0} seconds", _watch.Elapsed.Seconds));
+                string.Format("Total Time For Sorting {0} seconds", _watch.Elapsed.Seconds).Log(ConsoleColor.Yellow);
             }
 
             return result;
@@ -71,17 +70,15 @@ namespace Smooth
         private void HandleSortEvent(object sender, StageFileCommand e)
         {
             var stagingResults = e.Stage(new YearSortStrategy());
-            Console.ForegroundColor =ConsoleColor.Yellow;
-            Console.WriteLine(string.Format("Staged File: {0}  To Location {1}", e.FileToSort.FullName,  e.StagedFilePath));
+            string.Format("Staged File: {0}  To Location {1}", e.FileToSort.FullName,  e.StagedFilePath).Log(ConsoleColor.Yellow);
          
             if (!_showOnly)
             {
                 var newFile = stagingResults.Move(_deleteSourceFile);
-                Console.WriteLine("New File Name:", newFile);
+                String.Concat("New File Name:", newFile).Log();
                 if (stagingResults.Moved)
                 {
-                    Console.ForegroundColor =ConsoleColor.Red;
-                    Console.WriteLine(string.Format("Moved File: {0} To Location {1}", e.FileToSort.Name,  e.StagedFilePath));
+                     string.Format("Moved File: {0} To Location {1}", e.FileToSort.Name,  e.StagedFilePath).Log();
                 }
             }
            
