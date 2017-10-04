@@ -1,5 +1,7 @@
 # SMOOTH
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/df80261c1ffb418e8f87fabd3b83ae2e)](https://www.codacy.com/app/jbrach/smooth?utm_source=github.com&utm_medium=referral&utm_content=jbrach/smooth&utm_campaign=badger)
+
 ![Build Status](https://travis-ci.org/jbrach/smooth.svg?branch=master)
 
 Smooth is a tool that will sort files based on the strategy picked.
