@@ -7,13 +7,15 @@ RUN mkdir -p /usr/
 WORKDIR /usr/
 
 RUN apt-get update 
-RUN apt-get install -y git php5-curl curl php5-cli vim
+RUN apt-get install -y git curl vim
 
 #Copy the source COPY source dest
 #COPY . /usr/smooth/
 RUN git clone https://github.com/jbrach/smooth.git
 
-WORKDIR /user/smooth/
+WORKDIR ./smooth/
+
+RUN ls
 
 RUN dotnet restore
 
