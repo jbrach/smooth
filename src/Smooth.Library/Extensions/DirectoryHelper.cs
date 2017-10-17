@@ -9,7 +9,7 @@ namespace Smooth.Library
 /// </summary>
     public class DirectoryHelper
     {
-        private string _directory;
+        private readonly string _directory;
 
         public DirectoryHelper(string directory)
         {
@@ -61,7 +61,10 @@ namespace Smooth.Library
                     isParent = true;
                     break;
                 }
-                else subTest = subTest.Parent;
+                else 
+                { 
+                    subTest = subTest.Parent;
+                }
             }
             return isParent;
         }

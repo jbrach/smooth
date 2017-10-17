@@ -9,10 +9,10 @@ namespace Smooth
     public class SortCommand : ICommand
     {
         private readonly CommandLineApplication _app;
-        private bool _showOnly = false;
+        private readonly bool _showOnly;
 
-        private bool _deleteSourceFile = false;
-        private Stopwatch _watch;
+        private readonly bool _deleteSourceFile;
+        private readonly Stopwatch _watch;
 
         public SortCommand(CommandLineApplication commandLineApp)
         {

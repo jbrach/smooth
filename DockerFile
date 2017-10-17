@@ -7,7 +7,7 @@ RUN mkdir -p /usr/
 WORKDIR /usr/
 
 RUN apt-get update 
-RUN apt-get install -y git curl vim
+RUN apt-get install -y git curl vim --no-install-recommends
 
 #Copy the source COPY source dest
 #COPY . /usr/smooth/

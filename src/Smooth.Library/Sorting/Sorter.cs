@@ -10,7 +10,7 @@ namespace Smooth.Library
 
         private readonly string _sortMoveToRootDirectory;
 
-        private int _sortedFileCount;
+        private readonly int _sortedFileCount;
 
         //This delegate can be used to point to methods
         //which return void and take a string.

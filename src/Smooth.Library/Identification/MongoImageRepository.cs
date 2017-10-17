@@ -24,7 +24,7 @@ namespace Smooth.Library.Identification
 
         public void AddData(string name)
         {
-            var data = new SmoothData() { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), ImageName = name };
+            var data = new SmoothData { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), ImageName = name };
             Context.Database.GetCollection<SmoothData>("SmoothData").InsertOne(data);
         }
 

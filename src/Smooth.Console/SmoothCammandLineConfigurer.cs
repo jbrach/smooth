@@ -8,9 +8,6 @@ namespace Smooth
        
         public CommandOption ShowOnlyOption { get; private set; }
         public CommandOption DeleteSourceOption { get; private set; }
-
-        public SmoothCommandLineConfigurer()
-        {}
         public CommandLineApplication CreateCommandLineApplication()
         {
             CommandLineApplication   _app = new CommandLineApplication(throwOnUnexpectedArg: false)
