@@ -6,18 +6,16 @@ namespace Smooth.Library
 
     public class Sorter
     {
-        private readonly string _directory;
+        private readonly string _fileSourceRootDirectory;
 
-        private readonly string _sortMoveToRootDirectory;
+        private readonly string _fileDestinationRootDirectory;
 
-        private readonly int _sortedFileCount;
+        private readonly int _filesSortedCounter;
 
-        //This delegate can be used to point to methods
-        //which return void and take a string.
+       
         public delegate void SortHandler(StageFileCommand sort);
 
-        //This event can cause any method which conforms
-        //to MyEventHandler to be called.
+      
         public event EventHandler<StageFileCommand> RaiseFileSortEvent;
 
 
@@ -27,19 +25,19 @@ namespace Smooth.Library
     ///   
     /// Support Year Organization on day 1
     /// </summary>
-    /// <param name="sortingDirectory"></param>
-    /// <param name="sortMoveToRootDirectory"></param>
+    /// <param name="sortingDirectory">Root directory contains the files to sort</param>
+    /// <param name="sortMoveToRootDirectory">Destination directory.  Root directory the files will end up with the strategy applied</param>
         public Sorter(string sortingDirectory, string sortMoveToRootDirectory)
         {
-            _directory = sortingDirectory;
-            _sortMoveToRootDirectory = sortMoveToRootDirectory;
-            _sortedFileCount = 0;
+            _fileSourceRootDirectory = sortingDirectory;
+            _fileDestinationRootDirectory = sortMoveToRootDirectory;
+            _filesSortedCounter = 0;
         }
 
         public int Sort()
         {
-            DirectorySearch(new DirectoryInfo(_directory));
-            return _sortedFileCount;
+            DirectorySearch(new DirectoryInfo(_fileSourceRootDirectory));
+            return _filesSortedCounter;
         }
 
         private void DirectorySearch(DirectoryInfo root)
@@ -93,7 +91,7 @@ namespace Smooth.Library
                     EventHandler<StageFileCommand> handler = RaiseFileSortEvent;
                     if (handler!=null)
                     {
-                         handler(this, e: new StageFileCommand(fi,_sortMoveToRootDirectory));
+                         handler(this, e: new StageFileCommand(fi,_fileDestinationRootDirectory));
                     }
 
                 }
